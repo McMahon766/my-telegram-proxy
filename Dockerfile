@@ -1,3 +1,5 @@
 FROM nineseconds/mtg:latest
 
-CMD ["sh", "-c", "mtg run $SECRET --bind 0.0.0.0:$PORT"]
+ENTRYPOINT ["/bin/sh", "-c"]
+
+CMD ["mtg run $SECRET --bind 0.0.0.0:$PORT"]
