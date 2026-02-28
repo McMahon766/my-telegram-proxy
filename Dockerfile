@@ -2,6 +2,8 @@ FROM nineseconds/mtg:latest AS mtg
 
 FROM alpine:latest
 
-COPY --from=mtg /usr/bin/mtg /usr/bin/mtg
+# Copy the mtg binary (it's at /mtg in the source image)
+COPY --from=mtg /mtg /usr/bin/mtg
 
-CMD ["sh", "-c", "mtg run $SECRET --bind 0.0.0.0:$PORT"]
+# Run with env vars (SECRET and PORT) that Render provides
+CMD ["sh", "-c", "mtg simple-run 0.0.0.0:$PORT $SECRET"]
