@@ -1,5 +1,7 @@
-FROM nineseconds/mtg:latest
+FROM nineseconds/mtg:latest AS mtg
 
-ENTRYPOINT ["/bin/sh", "-c"]
+FROM alpine:latest
 
-CMD ["mtg run $SECRET --bind 0.0.0.0:$PORT"]
+COPY --from=mtg /usr/bin/mtg /usr/bin/mtg
+
+CMD ["sh", "-c", "mtg run $SECRET --bind 0.0.0.0:$PORT"]
